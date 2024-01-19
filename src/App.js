@@ -10,13 +10,14 @@ function App() {
   const [data, setData] = useState([]); // New state to store fetched data
 
   useEffect(() => {
-    fetch('http://192.168.100.38:3001/data') // Adjust this URL as needed
+    fetch('/.netlify/functions/data')
       .then(response => response.json())
       .then(fetchedData => {
-        setData(fetchedData); // Store the data in state
+        setData(fetchedData);
       })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
+  
 
   const calculateBMI = () => {
     const bmiValue = (weight / (height / 100) ** 2).toFixed(2);
