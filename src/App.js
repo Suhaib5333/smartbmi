@@ -8,6 +8,7 @@ function App() {
   const [bmi, setBmi] = useState(null);
   const [status, setStatus] = useState('');
   const [data, setData] = useState([]); // New state to store fetched data
+  const [name, setName] = useState('');
 
   useEffect(() => {
     fetch('/.netlify/functions/data')
@@ -40,20 +41,29 @@ function App() {
     setWeight(Number(event.target.value));
   };
 
+  const handleSaveData = () => {
+    // Prepare data to be sent
+    const userData = {
+      name,
+      bmi: bmi,
+      status: status.label
+    };
+
+    // Send data to the server
+    fetch('/.netlify/functions/saveData', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    })
+    .then(response => response.json())
+    .then(data => console.log('Data saved:', data))
+    .catch(error => console.error('Error saving data:', error));
+  };
+
   return (
-    
     <div className="App">
-      <div className="App">
-        {/* ... (rest of your JSX) */}
-        <div>
-          <h2>Data from Database</h2>
-          <ul>
-            {data.map((item, index) => (
-              <li key={index}>{JSON.stringify(item)}</li> // Display each item
-            ))}
-          </ul>
-        </div>
-      </div>
       <div className="bmi-container">
         <h1>BMI Calculator</h1>
         <div className="inputs">
@@ -74,9 +84,21 @@ function App() {
             </div>
           </div>
         </div>
+        <div className="input-box">
+          <label>Name</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Enter your name"
+          />
+        </div>
         <div className="calculate-box">
           <button className="calculate-button" onClick={calculateBMI}>
-            <FaCalculator />
+            <FaCalculator /> Calculate
+          </button>
+          <button className="save-button" onClick={handleSaveData}>
+            <FaSave /> Save
           </button>
         </div>
         {bmi && (
@@ -85,6 +107,14 @@ function App() {
             <p style={{ color: status.color }}>Status: {status.label}</p>
           </div>
         )}
+        <div>
+          <h2>Data from Database</h2>
+          <ul>
+            {data.map((item, index) => (
+              <li key={index}>{JSON.stringify(item)}</li> // Display each item
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
