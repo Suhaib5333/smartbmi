@@ -118,29 +118,31 @@ function App() {
             <p style={{ color: status.color }}>Status: {status.label}</p>
           </div>
         )}
-        <div>
-         <h2>Data from Database</h2>
+        <div className="table-container">
+          <h2>Data from Database</h2>
           <button className="refresh-button" onClick={fetchData}>
             <FaSync /> Refresh
           </button>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>BMI</th>
-                <th>Message</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.name}</td>
-                  <td>{item.bmi}</td>
-                  <td>{item.message}</td>
+          <div className="scrollable-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>BMI</th>
+                  <th>Message</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {data.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.name}</td>
+                    <td>{item.bmi}</td>
+                    <td>{item.message}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       {saveMessage && <div className="popup-message">{saveMessage}</div>}

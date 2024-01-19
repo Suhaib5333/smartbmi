@@ -175,3 +175,14 @@ th {
 tr:nth-child(even) {
   background-color: #f9f9f9;
 }
+.table-container {
+  margin-top: 20px;
+}
+
+.scrollable-table {
+  max-height: 300px; /* Adjust this value as needed */
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
+/* ... (existing styles) */
