@@ -9,6 +9,7 @@ function App() {
   const [status, setStatus] = useState('');
   const [data, setData] = useState([]); // New state to store fetched data
   const [name, setName] = useState('');
+  const [saveMessage, setSaveMessage] = useState('');
 
   useEffect(() => {
     fetch('/.netlify/functions/data')
@@ -52,14 +53,19 @@ function App() {
     // Send data to the server
     fetch('/.netlify/functions/saveData', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userData)
     })
     .then(response => response.json())
-    .then(data => console.log('Data saved:', data))
-    .catch(error => console.error('Error saving data:', error));
+    .then(data => {
+      console.log('Data saved:', data);
+      setSaveMessage('Data saved successfully'); // Set save message
+      setTimeout(() => setSaveMessage(''), 3000); // Clear message after 3 seconds
+    })
+    .catch(error => {
+      console.error('Error saving data:', error);
+      setSaveMessage('Error saving data');
+    });
   };
 
   return (
@@ -108,14 +114,19 @@ function App() {
           </div>
         )}
         <div>
-          <h2>Data from Database</h2>
+        <h2>Data from Database</h2>
           <ul>
             {data.map((item, index) => (
-              <li key={index}>{JSON.stringify(item)}</li> // Display each item
+              <li key={index}>
+                Name: {item.name}, BMI: {item.bmi}, Status: {item.status}
+              </li> // Nicely formatted display of each item
             ))}
           </ul>
         </div>
       </div>
+      {saveMessage && (
+        <div className="popup-message">{saveMessage}</div> // Display popup message
+      )}
     </div>
   );
 }
