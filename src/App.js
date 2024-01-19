@@ -16,7 +16,7 @@ function App() {
         setData(fetchedData);
       })
       .catch(error => console.error('Error fetching data:', error));
-  }, []);
+  }, [] );
   
 
   const calculateBMI = () => {
