@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaCalculator, FaSave } from 'react-icons/fa';
+import { FaCalculator, FaSave, FaSync } from 'react-icons/fa';
 import './App.css';
 
 function App() {
@@ -11,15 +11,19 @@ function App() {
   const [name, setName] = useState('');
   const [saveMessage, setSaveMessage] = useState('');
 
-  useEffect(() => {
+
+  const fetchData = () => {
     fetch('/.netlify/functions/data')
       .then(response => response.json())
       .then(fetchedData => {
         setData(fetchedData);
       })
       .catch(error => console.error('Error fetching data:', error));
-  }, [] );
-  
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const calculateBMI = () => {
     const bmiValue = (weight / (height / 100) ** 2).toFixed(2);
@@ -115,19 +119,31 @@ function App() {
           </div>
         )}
         <div>
-        <h2>Data from Database</h2>
-          <ul>
-            {data.map((item, index) => (
-              <li key={index}>
-                Name: {item.name}, BMI: {item.bmi}, Message: {item.message}
-              </li> // Nicely formatted display of each item
-            ))}
-          </ul>
+         <h2>Data from Database</h2>
+          <button className="refresh-button" onClick={fetchData}>
+            <FaSync /> Refresh
+          </button>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>BMI</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.name}</td>
+                  <td>{item.bmi}</td>
+                  <td>{item.message}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
-      {saveMessage && (
-        <div className="popup-message">{saveMessage}</div> // Display popup message
-      )}
+      {saveMessage && <div className="popup-message">{saveMessage}</div>}
     </div>
   );
 }
