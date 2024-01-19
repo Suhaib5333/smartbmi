@@ -12,7 +12,7 @@ exports.handler = async function(event, context) {
 
   try {
     const data = JSON.parse(event.body);
-    const result = await pool.query('INSERT INTO Users (name, bmi, status) VALUES ($1, $2, $3)', [data.name, data.bmi, data.status]);
+    const result = await pool.query('INSERT INTO Users (name, bmi, message) VALUES ($1, $2, $3)', [data.name, data.bmi, data.status]);
     return {
       statusCode: 200,
       body: JSON.stringify({ message: 'Data saved successfully' })
