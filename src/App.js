@@ -10,7 +10,7 @@ function App() {
   const [data, setData] = useState([]); // New state to store fetched data
 
   useEffect(() => {
-    fetch('http://smartbmi.netlify.app:3001/data') // Adjust this URL as needed
+    fetch('http://192.168.100.38:3001/data') // Adjust this URL as needed
       .then(response => response.json())
       .then(fetchedData => {
         setData(fetchedData); // Store the data in state
