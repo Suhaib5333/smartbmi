@@ -121,7 +121,7 @@ function App() {
         <div className="table-container">
           <h2>Data from Database</h2>
           <button className="refresh-button" onClick={fetchData}>
-            <FaSync /> Refresh
+            <FaSync />  Refresh
           </button>
           <div className="scrollable-table">
             <table>
