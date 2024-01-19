@@ -59,12 +59,13 @@ function App() {
     .then(response => response.json())
     .then(data => {
       console.log('Data saved:', data);
-      setSaveMessage('Data saved successfully'); // Set save message
+      setSaveMessage('Data saved successfully'); // Set success message
       setTimeout(() => setSaveMessage(''), 3000); // Clear message after 3 seconds
     })
     .catch(error => {
       console.error('Error saving data:', error);
-      setSaveMessage('Error saving data');
+      setSaveMessage('Error saving data'); // Set error message
+      setTimeout(() => setSaveMessage(''), 3000); // Clear message after 3 seconds
     });
   };
 
