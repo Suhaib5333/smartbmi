@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaCalculator } from 'react-icons/fa';
 import './App.css';
 
@@ -7,6 +7,16 @@ function App() {
   const [weight, setWeight] = useState(60);
   const [bmi, setBmi] = useState(null);
   const [status, setStatus] = useState('');
+  const [data, setData] = useState([]); // New state to store fetched data
+
+  useEffect(() => {
+    fetch('http://smartbmi.netlify.app:3001/data') // Adjust this URL as needed
+      .then(response => response.json())
+      .then(fetchedData => {
+        setData(fetchedData); // Store the data in state
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
 
   const calculateBMI = () => {
     const bmiValue = (weight / (height / 100) ** 2).toFixed(2);
@@ -30,7 +40,19 @@ function App() {
   };
 
   return (
+    
     <div className="App">
+      <div className="App">
+        {/* ... (rest of your JSX) */}
+        <div>
+          <h2>Data from Database</h2>
+          <ul>
+            {data.map((item, index) => (
+              <li key={index}>{JSON.stringify(item)}</li> // Display each item
+            ))}
+          </ul>
+        </div>
+      </div>
       <div className="bmi-container">
         <h1>BMI Calculator</h1>
         <div className="inputs">
