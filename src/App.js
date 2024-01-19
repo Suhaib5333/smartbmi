@@ -47,7 +47,7 @@ function App() {
     const userData = {
       name,
       bmi: bmi,
-      status: status.label
+      message: status.label // Use 'message' instead of 'status'
     };
 
     // Send data to the server
