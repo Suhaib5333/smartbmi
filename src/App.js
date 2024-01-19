@@ -119,7 +119,7 @@ function App() {
           <ul>
             {data.map((item, index) => (
               <li key={index}>
-                Name: {item.name}, BMI: {item.bmi}, Status: {item.status}
+                Name: {item.name}, BMI: {item.bmi}, Message: {item.message}
               </li> // Nicely formatted display of each item
             ))}
           </ul>
